@@ -46,16 +46,14 @@
 </div></section>
 <section class="section" id="idea"><div class="container">
 <div class="section-label">01 · Người trình bày 1</div><h2>Từ ý tưởng</h2>
-<div class="script-block"><span class="speaker-tag">Đọc to</span>
-<p>Ý tưởng của thuật toán này rất đơn giản. Trong mỗi bước, chúng ta sẽ <strong>tìm phần tử nhỏ nhất</strong> trong đoạn chưa sắp xếp, rồi đưa nó về đúng vị trí đầu của đoạn đó.</p>
+<div class="script-block"><p>Ý tưởng của thuật toán này rất đơn giản. Trong mỗi bước, chúng ta sẽ <strong>tìm phần tử nhỏ nhất</strong> trong đoạn chưa sắp xếp, rồi đưa nó về đúng vị trí đầu của đoạn đó.</p>
 <p>Hình dung như xếp hàng theo chiều cao: chọn người thấp nhất đưa lên đầu hàng, rồi chọn người thấp nhất trong số còn lại… Cứ làm như vậy đến hết.</p>
 <p>Số lần so sánh <strong>cố định</strong>, số lần đổi chỗ tối đa chỉ <strong>n − 1 lần</strong>.</p>
 </div></div></section>
 <section class="section dark" id="when"><div class="container">
 <div class="section-label">02 · Người trình bày 2</div><h2>Khi nào nên dùng / không nên dùng</h2>
-<div class="script-block"><span class="speaker-tag">Đọc to</span>
-<p>Selection Sort phù hợp khi mảng <strong>nhỏ</strong> (dưới 50 phần tử), khi chi phí đổi chỗ rất cao, hoặc cần thuật toán đơn giản để giảng dạy.</p>
-<p>Không nên dùng khi dữ liệu lớn (trên 10.000 phần tử) vì <strong>O(n²)</strong> (thời gian ≈ n bình phương) sẽ rất chậm. Cũng không phù hợp nếu cần sắp xếp ổn định hoặc dữ liệu gần như đã sắp.</p>
+<div class="script-block"><p>Selection Sort phù hợp khi mảng <strong>nhỏ</strong> (dưới 50 phần tử), khi chi phí đổi chỗ rất cao, hoặc cần thuật toán đơn giản để giảng dạy.</p>
+<p>Không nên dùng khi dữ liệu lớn (trên 10.000 phần tử) vì độ phức tạp là <strong>O(n²)</strong>. Chữ <strong>O</strong> (Big O) dùng để đo thời gian chạy. <strong>O(n²)</strong> nghĩa là số phép so sánh khoảng n × n (n bình phương). Ví dụ: 100 phần tử ≈ 10.000 lần so sánh; 10.000 phần tử ≈ 100 triệu lần so sánh — sẽ rất chậm. Cũng không phù hợp nếu cần sắp xếp ổn định (giữ nguyên thứ tự các phần tử có giá trị bằng nhau) hoặc dữ liệu gần như đã sắp.</p>
 </div>
 <div class="suitable-grid">
 <div class="card good"><h4>✓ Phù hợp khi</h4><ul><li>Mảng nhỏ (n < 50)</li><li>Chi phí swap (đổi chỗ) cao</li><li>Giảng dạy thuật toán cơ bản</li><li>Không cần ổn định</li></ul></div>
@@ -63,8 +61,7 @@
 </div></div></section>
 <section class="section" id="algo"><div class="container">
 <div class="section-label">03 · Người trình bày 3</div><h2>Thuật toán chi tiết</h2>
-<div class="script-block"><span class="speaker-tag">Đọc to</span>
-<p><strong>Bước 1:</strong> Khởi tạo i = 0.</p>
+<div class="script-block"><p><strong>Bước 1:</strong> Khởi tạo i = 0.</p>
 <p><strong>Bước 2:</strong> Gán min = i – tạm coi a[i] là nhỏ nhất.</p>
 <p><strong>Bước 3:</strong> Duyệt j từ i+1 đến n−1, cập nhật min khi gặp phần tử nhỏ hơn.</p>
 <p><strong>Bước 4:</strong> Đổi chỗ a[i] với a[min].</p>
@@ -80,8 +77,7 @@
 </div></div></section>
 <section class="section dark" id="visual"><div class="container">
 <div class="section-label">04 · Người trình bày 4</div><h2>Sơ đồ minh họa từng bước</h2>
-<div class="script-block"><span class="speaker-tag">Đọc to</span>
-<p>Minh họa với mảng <strong>64, 25, 12, 22, 11</strong>.</p>
+<div class="script-block"><p>Minh họa với mảng <strong>64, 25, 12, 22, 11</strong>.</p>
 <p>Tìm min = 11, đổi với 64 → 11, 25, 12, 22, 64. Tiếp theo min = 12 → 11, 12, 25, 22, 64. Rồi min = 22 → 11, 12, 22, 25, 64. Đã sắp xong.</p>
 <p>Mọi người bấm nút bên dưới để xem từng bước.</p>
 </div>
@@ -96,8 +92,7 @@
 </div></div></section>
 <section class="section" id="code"><div class="container">
 <div class="section-label">05 · Người trình bày 5</div><h2>Mã giả & Cài đặt C++</h2>
-<div class="script-block"><span class="speaker-tag">Đọc to</span>
-<p>Hai vòng lồng nhau: vòng ngoài cố định từng vị trí, vòng trong tìm min, rồi đổi chỗ một lần.</p>
+<div class="script-block"><p>Hai vòng lồng nhau: vòng ngoài cố định từng vị trí, vòng trong tìm min, rồi đổi chỗ một lần.</p>
 </div>
 <div class="code-tabs">
 <button class="tab active" data-tab="pseudo">Mã giả</button>
@@ -124,8 +119,7 @@ end procedure</code></pre></div>
 </div></section>
 <section class="section dark" id="example"><div class="container">
 <div class="section-label">06 · Người trình bày 6</div><h2>Mô hình ví dụ – Sinh viên</h2>
-<div class="script-block"><span class="speaker-tag">Đọc to</span>
-<p>Sắp xếp danh sách sinh viên theo điểm tăng dần. Sau Selection Sort: Lê Văn C 6.8 → Nguyễn Văn A 7.5 → Trần Thị B 8.2 → Phạm Thị D 9.0.</p>
+<div class="script-block"><p>Sắp xếp danh sách sinh viên theo điểm tăng dần. Sau Selection Sort: Lê Văn C 6.8 → Nguyễn Văn A 7.5 → Trần Thị B 8.2 → Phạm Thị D 9.0.</p>
 </div>
 <div class="student-table">
 <div class="table-header"><span>Mã SV</span><span>Họ tên</span><span>Điểm TB</span></div>
@@ -144,24 +138,21 @@ end procedure</code></pre></div>
 </div></div></section>
 <section class="section" id="pros"><div class="container">
 <div class="section-label">07 · Người trình bày 7</div><h2>Ưu điểm</h2>
-<div class="script-block"><span class="speaker-tag">Đọc to</span>
-<p>Dễ hiểu, dễ cài đặt. Số lần đổi chỗ rất ít (tối đa n−1). Sắp xếp tại chỗ (in-place). Hành vi dự đoán được.</p>
+<div class="script-block"><p>Dễ hiểu, dễ cài đặt. Số lần đổi chỗ rất ít (tối đa n−1). Sắp xếp tại chỗ (in-place). Hành vi dự đoán được.</p>
 </div>
 <div class="card pros" style="border-top:3px solid var(--green)">
 <ul><li>Dễ hiểu, dễ cài đặt</li><li>Số lần đổi chỗ rất ít (≤ n−1)</li><li>Không cần bộ nhớ phụ (in-place)</li><li>Hành vi dự đoán được</li></ul>
 </div></div></section>
 <section class="section dark" id="cons"><div class="container">
 <div class="section-label">08 · Người trình bày 8</div><h2>Nhược điểm</h2>
-<div class="script-block"><span class="speaker-tag">Đọc to</span>
-<p><strong>O(n²)</strong> (thời gian ≈ n bình phương) ở mọi trường hợp – chậm với dữ liệu lớn. Không ổn định. Luôn so sánh đủ, không tận dụng dữ liệu gần sắp. Ít dùng trong thư viện chuẩn.</p>
+<div class="script-block"><p><strong>O(n²)</strong> ở mọi trường hợp (số bước luôn khoảng n × n) — chậm với dữ liệu lớn. Không ổn định. Luôn so sánh đủ, không tận dụng dữ liệu gần sắp. Ít dùng trong thư viện chuẩn.</p>
 </div>
 <div class="card cons" style="border-top:3px solid var(--red)">
-<ul><li>O(n²) (thời gian ≈ n bình phương) – chậm với dữ liệu lớn</li><li>Không ổn định (unstable)</li><li>Không có dừng sớm</li><li>Ít dùng trong thư viện chuẩn</li></ul>
+<ul><li>O(n²) — số bước ≈ n × n, chậm với dữ liệu lớn</li><li>Không ổn định (unstable)</li><li>Không có dừng sớm</li><li>Ít dùng trong thư viện chuẩn</li></ul>
 </div></div></section>
 <section class="section conclusion" id="conclusion"><div class="container">
 <div class="section-label">09 · Người trình bày 9–10</div><h2>Kết luận</h2>
-<div class="script-block"><span class="speaker-tag">Đọc to</span>
-<p>Selection Sort (Sắp xếp chọn) đơn giản, dễ hiểu, đổi chỗ ít. Nhược điểm chính là chậm với độ phức tạp <strong>O(n²)</strong> (thời gian ≈ n bình phương) và không ổn định. Phù hợp học cơ bản và dữ liệu nhỏ.</p>
+<div class="script-block"><p>Selection Sort (Sắp xếp chọn) đơn giản, dễ hiểu, đổi chỗ ít. Nhược điểm chính là chậm với độ phức tạp <strong>O(n²)</strong> (số bước ≈ n × n) và không ổn định. Phù hợp học cơ bản và dữ liệu nhỏ.</p>
 <p>Nhóm em xin cảm ơn thầy cô và các bạn đã lắng nghe.</p>
 </div>
 <div class="thank-you">
