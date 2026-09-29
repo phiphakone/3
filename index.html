@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phương pháp Chọn Trực tiếp – Selection Sort</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Progress bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Navigation dots -->
+  <nav class="nav-dots" id="navDots">
+    <a href="#hero" data-section="0" data-label="Trang chủ" class="active"></a>
+    <a href="#idea" data-section="1" data-label="Ý tưởng"></a>
+    <a href="#algo" data-section="2" data-label="Thuật toán"></a>
+    <a href="#complexity" data-section="3" data-label="Độ phức tạp"></a>
+    <a href="#visual" data-section="4" data-label="Minh họa"></a>
+    <a href="#code" data-section="5" data-label="Mã nguồn"></a>
+    <a href="#example" data-section="6" data-label="Ví dụ"></a>
+    <a href="#proscons" data-section="7" data-label="Ưu nhược"></a>
+    <a href="#compare" data-section="8" data-label="So sánh"></a>
+    <a href="#conclusion" data-section="9" data-label="Kết luận"></a>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="section hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Các phương pháp sắp xếp thông dụng</p>
+      <h1>Phương pháp<br><span class="highlight">Chọn Trực tiếp</span></h1>
+      <p class="subtitle">Selection Sort</p>
+      <p class="hero-desc">Bài thuyết trình chi tiết về thuật toán sắp xếp bằng phương pháp chọn trực tiếp</p>
+      <div class="scroll-hint">
+        <span>Cuộn xuống để khám phá</span>
+        <div class="mouse"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 1. TỪ Ý TƯỞNG ========== -->
+  <section class="section" id="idea">
+    <div class="container">
+      <div class="section-label">01</div>
+      <h2>Từ ý tưởng</h2>
+      <div class="two-col">
+        <div class="card main-idea">
+          <h3>Ý tưởng cốt lõi</h3>
+          <p>Trong mỗi bước, tìm phần tử <strong>nhỏ nhất</strong> trong đoạn chưa sắp xếp và đưa nó về đúng vị trí đầu đoạn đó.</p>
+          <div class="analogy">
+            <div class="analogy-icon">👥</div>
+            <p>Giống như chọn người thấp nhất trong hàng rồi đưa lên đứng đầu hàng, sau đó chọn người thấp nhất trong số còn lại…</p>
+          </div>
+        </div>
+        <div class="card-stack">
+          <div class="card feature">
+            <span class="num">01</span>
+            <h4>Số lần so sánh cố định</h4>
+            <p>Không phụ thuộc dữ liệu đầu vào</p>
+          </div>
+          <div class="card feature">
+            <span class="num">02</span>
+            <h4>Số lần đổi chỗ tối đa</h4>
+            <p>Chỉ n − 1 lần</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="suitable-grid">
+        <div class="card good">
+          <h4>✓ Phù hợp khi nào?</h4>
+          <ul>
+            <li>Mảng nhỏ (n &lt; 50)</li>
+            <li>Chi phí ghi nhớ cao (swap đắt)</li>
+            <li>Cần thuật toán đơn giản để giảng dạy</li>
+            <li>Không quan tâm tính ổn định</li>
+          </ul>
+        </div>
+        <div class="card bad">
+          <h4>✗ Không phù hợp khi?</h4>
+          <ul>
+            <li>Dữ liệu lớn (n &gt; 10.000)</li>
+            <li>Cần sắp xếp ổn định</li>
+            <li>Dữ liệu gần như đã sắp</li>
+            <li>Yêu cầu hiệu suất cao</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 2. THUẬT TOÁN ========== -->
+  <section class="section dark" id="algo">
+    <div class="container">
+      <div class="section-label">02</div>
+      <h2>Thuật toán chi tiết</h2>
+      <div class="steps">
+        <div class="step" data-step="1">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Khởi tạo</h4>
+            <p>i = 0</p>
+          </div>
+        </div>
+        <div class="step" data-step="2">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Giả sử min</h4>
+            <p>Gán min = i (a[i] là nhỏ nhất tạm thời)</p>
+          </div>
+        </div>
+        <div class="step" data-step="3">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Duyệt tìm min</h4>
+            <p>Duyệt j từ i+1 đến n−1<br>Nếu a[j] &lt; a[min] → cập nhật min = j</p>
+          </div>
+        </div>
+        <div class="step" data-step="4">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Đổi chỗ</h4>
+            <p>Đổi chỗ a[i] ↔ a[min]</p>
+          </div>
+        </div>
+        <div class="step" data-step="5">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Tăng i</h4>
+            <p>Tăng i lên 1, quay lại bước 2 nếu i &lt; n−1</p>
+          </div>
+        </div>
+        <div class="step" data-step="6">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Kết thúc</h4>
+            <p>Mảng đã sắp xếp tăng dần</p>
+          </div>
+        </div>
+      </div>
+      <p class="note">Lưu ý: Vòng ngoài chạy đúng n−1 lần, vòng trong giảm dần.</p>
+    </div>
+  </section>
+
+  <!-- ========== 3. ĐỘ PHỨC TẠP ========== -->
+  <section class="section" id="complexity">
+    <div class="container">
+      <div class="section-label">03</div>
+      <h2>Độ phức tạp</h2>
+      <div class="complexity-grid">
+        <div class="card complex-card">
+          <div class="icon-circle time">⏱</div>
+          <h3>Thời gian</h3>
+          <div class="big-o">O(n²)</div>
+          <ul>
+            <li>Tốt nhất: O(n²)</li>
+            <li>Trung bình: O(n²)</li>
+            <li>Xấu nhất: O(n²)</li>
+          </ul>
+          <p class="hint">Luôn so sánh đủ ≈ n(n−1)/2 lần</p>
+        </div>
+        <div class="card complex-card">
+          <div class="icon-circle space">💾</div>
+          <h3>Không gian</h3>
+          <div class="big-o">O(1)</div>
+          <ul>
+            <li>Sắp xếp tại chỗ (in-place)</li>
+            <li>Chỉ cần biến tạm để đổi chỗ</li>
+          </ul>
+        </div>
+        <div class="card complex-card">
+          <div class="icon-circle stable">⚖</div>
+          <h3>Ổn định</h3>
+          <div class="big-o unstable">Không</div>
+          <ul>
+            <li>Không ổn định (unstable)</li>
+            <li>Có thể đảo vị trí các phần tử bằng nhau</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 4. MINH HỌA ========== -->
+  <section class="section dark" id="visual">
+    <div class="container">
+      <div class="section-label">04</div>
+      <h2>Sơ đồ minh họa từng bước</h2>
+      <p class="section-desc">Theo dõi quá trình sắp xếp mảng: <strong>64, 25, 12, 22, 11</strong></p>
+
+      <div class="visualizer">
+        <div class="array-state" id="arrayState">
+          <div class="bar-wrapper" data-value="64"><div class="bar" style="height:90%"></div><span>64</span></div>
+          <div class="bar-wrapper" data-value="25"><div class="bar" style="height:40%"></div><span>25</span></div>
+          <div class="bar-wrapper" data-value="12"><div class="bar" style="height:20%"></div><span>12</span></div>
+          <div class="bar-wrapper" data-value="22"><div class="bar" style="height:35%"></div><span>22</span></div>
+          <div class="bar-wrapper" data-value="11"><div class="bar" style="height:18%"></div><span>11</span></div>
+        </div>
+        <div class="visual-controls">
+          <button id="prevStep" class="btn">← Trước</button>
+          <span class="step-label" id="stepLabel">Ban đầu</span>
+          <button id="nextStep" class="btn">Tiếp →</button>
+        </div>
+        <div class="step-explanation" id="stepExplanation">
+          Mảng ban đầu chưa được sắp xếp. Sẽ tìm phần tử nhỏ nhất và đưa về đầu.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 5. MÃ GIẢ & CODE ========== -->
+  <section class="section" id="code">
+    <div class="container">
+      <div class="section-label">05</div>
+      <h2>Mã giả & Cài đặt C++</h2>
+      <div class="code-tabs">
+        <button class="tab active" data-tab="pseudo">Mã giả</button>
+        <button class="tab" data-tab="cpp">C++</button>
+      </div>
+      <div class="code-panel active" id="pseudo">
+<pre><code>procedure SelectionSort(a[0..n−1])
+  for i ← 0 to n−2 do
+    min ← i
+    for j ← i+1 to n−1 do
+      if a[j] &lt; a[min] then
+        min ← j
+      end if
+    end for
+    swap a[i] with a[min]
+  end for
+end procedure</code></pre>
+      </div>
+      <div class="code-panel" id="cpp">
+<pre><code>void selectionSort(int a[], int n) {
+  for (int i = 0; i &lt; n - 1; i++) {
+    int min = i;
+    for (int j = i + 1; j &lt; n; j++) {
+      if (a[j] &lt; a[min])
+        min = j;
+    }
+    // Đổi chỗ a[i] và a[min]
+    int temp = a[i];
+    a[i] = a[min];
+    a[min] = temp;
+  }
+}</code></pre>
+      </div>
+      <div class="code-notes">
+        <div class="note-item"><strong>Vòng for ngoài (i):</strong> chạy n−1 lần – mỗi lần cố định 1 vị trí</div>
+        <div class="note-item"><strong>Biến min:</strong> lưu chỉ số phần tử nhỏ nhất tìm được trong đoạn</div>
+        <div class="note-item"><strong>Vòng for trong (j):</strong> tìm phần tử nhỏ hơn a[min]</div>
+        <div class="note-item"><strong>Đổi chỗ:</strong> chỉ thực hiện 1 lần sau khi tìm xong min</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 6. VÍ DỤ SINH VIÊN ========== -->
+  <section class="section dark" id="example">
+    <div class="container">
+      <div class="section-label">06</div>
+      <h2>Mô hình ví dụ – Sinh viên</h2>
+      <p class="section-desc">Sắp xếp danh sách sinh viên theo điểm tăng dần</p>
+
+      <div class="student-table">
+        <div class="table-header">
+          <span>Mã SV</span>
+          <span>Họ tên</span>
+          <span>Điểm TB</span>
+        </div>
+        <div class="table-row before">
+          <span>SV001</span>
+          <span>Nguyễn Văn A</span>
+          <span class="score">7.5</span>
+        </div>
+        <div class="table-row before">
+          <span>SV002</span>
+          <span>Trần Thị B</span>
+          <span class="score">8.2</span>
+        </div>
+        <div class="table-row before">
+          <span>SV003</span>
+          <span>Lê Văn C</span>
+          <span class="score">6.8</span>
+        </div>
+        <div class="table-row before">
+          <span>SV004</span>
+          <span>Phạm Thị D</span>
+          <span class="score">9.0</span>
+        </div>
+      </div>
+
+      <div class="arrow-down">↓ Selection Sort theo điểm ↓</div>
+
+      <div class="student-table sorted">
+        <div class="table-header">
+          <span>#</span>
+          <span>Họ tên</span>
+          <span>Điểm TB</span>
+        </div>
+        <div class="table-row after">
+          <span>1</span>
+          <span>Lê Văn C</span>
+          <span class="score">6.8</span>
+        </div>
+        <div class="table-row after">
+          <span>2</span>
+          <span>Nguyễn Văn A</span>
+          <span class="score">7.5</span>
+        </div>
+        <div class="table-row after">
+          <span>3</span>
+          <span>Trần Thị B</span>
+          <span class="score">8.2</span>
+        </div>
+        <div class="table-row after">
+          <span>4</span>
+          <span>Phạm Thị D</span>
+          <span class="score">9.0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 7. ƯU & NHƯỢC ========== -->
+  <section class="section" id="proscons">
+    <div class="container">
+      <div class="section-label">07</div>
+      <h2>Ưu & Nhược điểm</h2>
+      <div class="pros-cons">
+        <div class="card pros">
+          <h3>Ưu điểm</h3>
+          <ul>
+            <li>Dễ hiểu, dễ cài đặt – phù hợp giảng dạy thuật toán cơ bản</li>
+            <li>Số lần đổi chỗ rất ít (tối đa n−1 lần) → tốt khi swap tốn kém</li>
+            <li>Không cần bộ nhớ phụ (in-place) → O(1) không gian</li>
+            <li>Hành vi dự đoán được: luôn chạy đúng số lần so sánh cố định</li>
+            <li>Không phụ thuộc vào dữ liệu đầu vào</li>
+          </ul>
+        </div>
+        <div class="card cons">
+          <h3>Nhược điểm</h3>
+          <ul>
+            <li>Độ phức tạp O(n²) – chậm với dữ liệu lớn</li>
+            <li>Không ổn định (unstable) – có thể đảo vị trí phần tử bằng nhau</li>
+            <li>Luôn thực hiện đủ số lần so sánh, không tận dụng dữ liệu gần đúng</li>
+            <li>Không có cơ chế dừng sớm như Bubble Sort tối ưu</li>
+            <li>Ít được dùng trong thư viện chuẩn</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 8. SO SÁNH ========== -->
+  <section class="section dark" id="compare">
+    <div class="container">
+      <div class="section-label">08</div>
+      <h2>So sánh nhanh</h2>
+      <div class="compare-table-wrapper">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Tiêu chí</th>
+              <th>Selection</th>
+              <th>Insertion</th>
+              <th>Bubble</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Thời gian TB</td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+              <td>O(n²)</td>
+            </tr>
+            <tr>
+              <td>Tốt nhất</td>
+              <td>O(n²)</td>
+              <td class="good-cell">O(n)</td>
+              <td class="good-cell">O(n)</td>
+            </tr>
+            <tr>
+              <td>Ổn định</td>
+              <td class="bad-cell">Không</td>
+              <td class="good-cell">Có</td>
+              <td class="good-cell">Có</td>
+            </tr>
+            <tr>
+              <td>Số lần swap</td>
+              <td class="good-cell">Ít (≤n−1)</td>
+              <td>Trung bình</td>
+              <td class="bad-cell">Nhiều</td>
+            </tr>
+            <tr>
+              <td>Dễ cài đặt</td>
+              <td class="good-cell">Rất dễ</td>
+              <td>Dễ</td>
+              <td class="good-cell">Rất dễ</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 9. KẾT LUẬN ========== -->
+  <section class="section conclusion" id="conclusion">
+    <div class="container">
+      <div class="section-label">09</div>
+      <h2>Kết luận</h2>
+      <div class="conclusion-content">
+        <p class="lead">Selection Sort là thuật toán sắp xếp <strong>đơn giản, dễ hiểu</strong>.</p>
+        <div class="conclusion-points">
+          <div class="point">
+            <span class="icon">✓</span>
+            <p>Ưu điểm nổi bật: số lần đổi chỗ ít, không cần bộ nhớ phụ.</p>
+          </div>
+          <div class="point">
+            <span class="icon">✗</span>
+            <p>Nhược điểm: chậm O(n²), không ổn định.</p>
+          </div>
+          <div class="point">
+            <span class="icon">→</span>
+            <p>Phù hợp để học thuật toán cơ bản và áp dụng với dữ liệu nhỏ.</p>
+          </div>
+          <div class="point">
+            <span class="icon">★</span>
+            <p>Trong thực tế, nên dùng các thuật toán hiệu quả hơn (Quick, Merge, Heap).</p>
+          </div>
+        </div>
+        <div class="thank-you">
+          <h3>Cảm ơn đã lắng nghe!</h3>
+          <p>Phương pháp Chọn Trực tiếp – Selection Sort</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
