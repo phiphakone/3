@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="style.css"/>
 <link rel="stylesheet" href="polish.css"/>
 <style>
-.speaker-tag{display:inline-block;background:rgba(124,108,240,0.2);color:var(--accent-soft);font-size:0.75rem;font-weight:600;padding:4px 12px;border-radius:20px;margin-bottom:16px}
 .script-block{background:var(--bg-card);border-radius:var(--radius);padding:28px 32px;border:1px solid rgba(255,255,255,0.05);margin-bottom:20px;border-left:4px solid var(--accent)}
 .script-block p{color:var(--text-muted);font-size:1.05rem;line-height:1.75;margin-bottom:14px}
 .script-block p:last-child{margin-bottom:0}.script-block strong{color:var(--text)}
@@ -19,6 +18,9 @@
 .orb-3{width:160px;height:160px;background:rgba(110,182,255,0.4);top:40%;right:10%;animation-delay:-6s}
 @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-25px) scale(1.08)}}
 .hero{position:relative;overflow:hidden}
+.cmt{color:#8aa0b8;font-style:italic;font-weight:400}
+.code-notes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+@media(max-width:700px){.code-notes{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -42,123 +44,69 @@
 <h1>Phương pháp<br><span class="highlight">Chọn Trực tiếp</span></h1>
 <p class="subtitle">Selection Sort (Sắp xếp chọn)</p>
 <p class="hero-desc">Bài thuyết trình nhóm – khoảng 10 người lần lượt trình bày</p>
-<div class="scroll-hint"><span>Cuộn xuống để bắt đầu</span><div class="mouse"></div></div>
 </div></section>
 <section class="section" id="idea"><div class="container">
 <h2>Từ ý tưởng</h2>
-<div class="script-block"><p>Ý tưởng của thuật toán này rất đơn giản. Trong mỗi bước, chúng ta sẽ <strong>tìm phần tử nhỏ nhất</strong> trong đoạn chưa sắp xếp, rồi đưa nó về đúng vị trí đầu của đoạn đó.</p>
-<p>Hình dung như xếp hàng theo chiều cao: chọn người thấp nhất đưa lên đầu hàng, rồi chọn người thấp nhất trong số còn lại… Cứ làm như vậy đến hết.</p>
-<p>Số lần so sánh <strong>cố định</strong>, số lần đổi chỗ tối đa chỉ <strong>n − 1 lần</strong>.</p>
-</div></div></section>
+<div class="script-block"><p>Trong mỗi bước, <strong>tìm phần tử nhỏ nhất</strong> trong đoạn chưa sắp, rồi đưa về đúng vị trí đầu. Số lần đổi chỗ tối đa n − 1 lần.</p></div></div></section>
 <section class="section dark" id="when"><div class="container">
 <h2>Khi nào nên dùng / không nên dùng</h2>
-<div class="script-block"><p>Selection Sort phù hợp khi mảng <strong>nhỏ</strong> (dưới 50 phần tử), khi chi phí đổi chỗ rất cao, hoặc cần thuật toán đơn giản để giảng dạy.</p>
-<p>Không nên dùng khi dữ liệu lớn (trên 10.000 phần tử) vì độ phức tạp là <strong>O(n²)</strong>. Chữ <strong>O</strong> (Big O) dùng để đo thời gian chạy. <strong>O(n²)</strong> nghĩa là số phép so sánh khoảng n × n (n bình phương). Ví dụ: 100 phần tử ≈ 10.000 lần so sánh; 10.000 phần tử ≈ 100 triệu lần so sánh — sẽ rất chậm. Cũng không phù hợp nếu cần sắp xếp ổn định (giữ nguyên thứ tự các phần tử có giá trị bằng nhau) hoặc dữ liệu gần như đã sắp.</p>
-</div>
+<div class="script-block"><p>Phù hợp mảng nhỏ. Không nên dùng dữ liệu lớn vì <strong>O(n²)</strong> — số so sánh khoảng n × n. Ví dụ 100 phần tử ≈ 10.000 lần so sánh.</p></div>
 <div class="suitable-grid">
-<div class="card good"><h4>✓ Phù hợp khi</h4><ul><li>Mảng nhỏ (n < 50)</li><li>Chi phí swap (đổi chỗ) cao</li><li>Giảng dạy thuật toán cơ bản</li><li>Không cần ổn định</li></ul></div>
-<div class="card bad"><h4>✗ Không phù hợp khi</h4><ul><li>Dữ liệu lớn (n > 10.000)</li><li>Cần sắp xếp ổn định</li><li>Dữ liệu gần như đã sắp</li><li>Yêu cầu hiệu suất cao</li></ul></div>
+<div class="card good"><h4>✓ Phù hợp khi</h4><ul><li>Mảng nhỏ (n < 50)</li><li>Chi phí swap cao</li><li>Giảng dạy cơ bản</li></ul></div>
+<div class="card bad"><h4>✗ Không phù hợp khi</h4><ul><li>Dữ liệu lớn</li><li>Cần ổn định</li></ul></div>
 </div></div></section>
 <section class="section" id="algo"><div class="container">
 <h2>Thuật toán chi tiết</h2>
-<div class="script-block"><p><strong>Bước 1:</strong> Khởi tạo i = 0.</p>
-<p><strong>Bước 2:</strong> Gán min = i – tạm coi a[i] là nhỏ nhất.</p>
-<p><strong>Bước 3:</strong> Duyệt j từ i+1 đến n−1, cập nhật min khi gặp phần tử nhỏ hơn.</p>
+<div class="script-block">
+<p><strong>Bước 1:</strong> i = 0.</p>
+<p><strong>Bước 2:</strong> min = i.</p>
+<p><strong>Bước 3:</strong> Duyệt j từ i+1 đến n−1, cập nhật min khi gặp nhỏ hơn.</p>
 <p><strong>Bước 4:</strong> Đổi chỗ a[i] với a[min].</p>
-<p><strong>Bước 5–6:</strong> Tăng i, lặp đến khi i = n−2. Mảng đã sắp tăng dần.</p>
-</div>
-<div class="steps">
-<div class="step"><div class="step-num">1</div><div class="step-content"><h4>Khởi tạo</h4><p>i = 0</p></div></div>
-<div class="step"><div class="step-num">2</div><div class="step-content"><h4>Giả sử min</h4><p>min = i</p></div></div>
-<div class="step"><div class="step-num">3</div><div class="step-content"><h4>Duyệt tìm min</h4><p>j từ i+1 → n−1</p></div></div>
-<div class="step"><div class="step-num">4</div><div class="step-content"><h4>Đổi chỗ</h4><p>a[i] ↔ a[min]</p></div></div>
-<div class="step"><div class="step-num">5</div><div class="step-content"><h4>Tăng i</h4><p>i = i + 1</p></div></div>
-<div class="step"><div class="step-num">6</div><div class="step-content"><h4>Kết thúc</h4><p>Mảng đã sắp tăng dần</p></div></div>
 </div></div></section>
 <section class="section dark" id="visual"><div class="container">
 <h2>Sơ đồ minh họa từng bước</h2>
-<div class="script-block"><p>Minh họa với mảng <strong>64, 25, 12, 22, 11</strong>.</p>
-<p>Tìm min = 11, đổi với 64 → 11, 25, 12, 22, 64. Tiếp theo min = 12 → 11, 12, 25, 22, 64. Rồi min = 22 → 11, 12, 22, 25, 64. Đã sắp xong.</p>
-<p>Mọi người bấm nút bên dưới để xem từng bước.</p>
-</div>
-<div class="visualizer">
-<div class="array-state" id="arrayState"></div>
-<div class="visual-controls">
-<button id="prevStep" class="btn">← Trước</button>
-<span class="step-label" id="stepLabel">Ban đầu</span>
-<button id="nextStep" class="btn">Tiếp →</button>
-</div>
-<div class="step-explanation" id="stepExplanation"></div>
-</div></div></section>
+<div class="script-block"><p>Mảng <strong>64, 25, 12, 22, 11</strong>. Tìm min rồi đổi về đầu từng vòng.</p></div>
+<div class="visualizer"><div class="array-state" id="arrayState"></div>
+<div class="visual-controls"><button id="prevStep" class="btn">← Trước</button><span class="step-label" id="stepLabel">Ban đầu</span><button id="nextStep" class="btn">Tiếp →</button></div>
+<div class="step-explanation" id="stepExplanation"></div></div>
+</div></section>
 <section class="section" id="code"><div class="container">
 <h2>Mã giả & Cài đặt C++</h2>
-<div class="script-block"><p>Hai vòng lồng nhau: vòng ngoài cố định từng vị trí, vòng trong tìm min, rồi đổi chỗ một lần.</p>
-</div>
-<div class="code-tabs">
-<button class="tab active" data-tab="pseudo">Mã giả</button>
-<button class="tab" data-tab="cpp">C++</button>
-</div>
-<div class="code-panel active" id="pseudo"><pre><code>procedure SelectionSort(a[0..n−1])
-  for i ← 0 to n−2 do
-    min ← i
-    for j ← i+1 to n−1 do
-      if a[j] < a[min] then min ← j
-    end for
-    swap a[i] with a[min]
+<div class="code-tabs"><button class="tab active" data-tab="pseudo">Mã giả</button><button class="tab" data-tab="cpp">C++</button></div>
+<div class="code-panel active" id="pseudo"><pre><code>procedure SelectionSort(a[0..n−1])   <span class="cmt">// bắt đầu sắp xếp chọn</span>
+  for i ← 0 to n−2 do                <span class="cmt">// vòng ngoài: vị trí cần đặt min</span>
+    min ← i                          <span class="cmt">// tạm coi a[i] là nhỏ nhất</span>
+    for j ← i+1 to n−1 do            <span class="cmt">// vòng trong: tìm min thật</span>
+      if a[j] < a[min] then min ← j  <span class="cmt">// gặp nhỏ hơn thì nhớ vị trí</span>
+    end for                          <span class="cmt">// đã tìm xong min</span>
+    swap a[i] with a[min]            <span class="cmt">// đưa min về đúng chỗ</span>
   end for
 end procedure</code></pre></div>
-<div class="code-panel" id="cpp"><pre><code>void selectionSort(int a[], int n) {
-  for (int i = 0; i < n - 1; i++) {
-    int min = i;
-    for (int j = i + 1; j < n; j++) {
-      if (a[j] < a[min]) min = j;
+<div class="code-panel" id="cpp"><pre><code>void selectionSort(int a[], int n) {     <span class="cmt">// hàm C++</span>
+  for (int i = 0; i < n - 1; i++) {      <span class="cmt">// i từ 0 đến n−2</span>
+    int min = i;                         <span class="cmt">// giả sử min ở vị trí i</span>
+    for (int j = i + 1; j < n; j++) {    <span class="cmt">// tìm phần tử nhỏ hơn</span>
+      if (a[j] < a[min]) min = j;        <span class="cmt">// cập nhật vị trí min</span>
     }
-    int temp = a[i]; a[i] = a[min]; a[min] = temp;
+    int temp = a[i]; a[i] = a[min]; a[min] = temp;  <span class="cmt">// đổi chỗ 1 lần</span>
   }
 }</code></pre></div>
-</div></section>
+<div class="code-notes">
+<div class="note-item"><strong>procedure / hàm:</strong> bắt đầu Selection Sort</div>
+<div class="note-item"><strong>for i:</strong> mỗi vòng chốt 1 vị trí phía trước</div>
+<div class="note-item"><strong>min ← i:</strong> tạm coi a[i] là nhỏ nhất</div>
+<div class="note-item"><strong>for j:</strong> duyệt phần còn lại để tìm min thật</div>
+<div class="note-item"><strong>if a[j] < a[min]:</strong> gặp nhỏ hơn thì nhớ vị trí j</div>
+<div class="note-item"><strong>swap / temp:</strong> đổi chỗ một lần bằng biến tạm</div>
+</div></div></section>
 <section class="section dark" id="example"><div class="container">
 <h2>Mô hình ví dụ – Sinh viên</h2>
-<div class="script-block"><p>Sắp xếp danh sách sinh viên theo điểm tăng dần. Sau Selection Sort: Lê Văn C 6.8 → Nguyễn Văn A 7.5 → Trần Thị B 8.2 → Phạm Thị D 9.0.</p>
-</div>
-<div class="student-table">
-<div class="table-header"><span>Mã SV</span><span>Họ tên</span><span>Điểm TB</span></div>
-<div class="table-row before"><span>SV001</span><span>Nguyễn Văn A</span><span class="score">7.5</span></div>
-<div class="table-row before"><span>SV002</span><span>Trần Thị B</span><span class="score">8.2</span></div>
-<div class="table-row before"><span>SV003</span><span>Lê Văn C</span><span class="score">6.8</span></div>
-<div class="table-row before"><span>SV004</span><span>Phạm Thị D</span><span class="score">9.0</span></div>
-</div>
-<div class="arrow-down">↓ Selection Sort (Sắp xếp chọn) theo điểm ↓</div>
-<div class="student-table sorted">
-<div class="table-header"><span>#</span><span>Họ tên</span><span>Điểm TB</span></div>
-<div class="table-row after"><span>1</span><span>Lê Văn C</span><span class="score">6.8</span></div>
-<div class="table-row after"><span>2</span><span>Nguyễn Văn A</span><span class="score">7.5</span></div>
-<div class="table-row after"><span>3</span><span>Trần Thị B</span><span class="score">8.2</span></div>
-<div class="table-row after"><span>4</span><span>Phạm Thị D</span><span class="score">9.0</span></div>
-</div></div></section>
-<section class="section" id="pros"><div class="container">
-<h2>Ưu điểm</h2>
-<div class="script-block"><p>Dễ hiểu, dễ cài đặt. Số lần đổi chỗ rất ít (tối đa n−1). Sắp xếp tại chỗ (in-place). Hành vi dự đoán được.</p>
-</div>
-<div class="card pros" style="border-top:3px solid var(--green)">
-<ul><li>Dễ hiểu, dễ cài đặt</li><li>Số lần đổi chỗ rất ít (≤ n−1)</li><li>Không cần bộ nhớ phụ (in-place)</li><li>Hành vi dự đoán được</li></ul>
-</div></div></section>
-<section class="section dark" id="cons"><div class="container">
-<h2>Nhược điểm</h2>
-<div class="script-block"><p><strong>O(n²)</strong> ở mọi trường hợp (số bước luôn khoảng n × n) — chậm với dữ liệu lớn. Không ổn định. Luôn so sánh đủ, không tận dụng dữ liệu gần sắp. Ít dùng trong thư viện chuẩn.</p>
-</div>
-<div class="card cons" style="border-top:3px solid var(--red)">
-<ul><li>O(n²) — số bước ≈ n × n, chậm với dắ liệu lớn</li><li>Không ổn định (unstable)</li><li>Không có dừng sớm</li><li>Ít dùng trong thư viện chuẩn</li></ul>
-</div></div></section>
-<section class="section conclusion" id="conclusion"><div class="container">
-<h2>Kết luận</h2>
-<div class="script-block"><p>Selection Sort (Sắp xếp chọn) đơn giản, dễ hiểu, đổi chỗ ít. Nhược điểm chính là chậm với độ phức tạp <strong>O(n²)</strong> (số bước ≈ n × n) và không ổn định. Phù hợp học cơ bản và dữ liệu nhỏ.</p>
-<p>Nhóm em xin cảm ơn thầy cô và các bạn đã lắng nghe.</p>
-</div>
-<div class="thank-you">
-<h3>Cảm ơn đã lắng nghe!</h3>
-<p>Phương pháp Chọn Trực tiếp – Selection Sort (Sắp xếp chọn)</p>
-</div></div></section>
+<div class="script-block"><p>Sau Selection Sort: Lê Văn C 6.8 → Nguyễn Văn A 7.5 → Trần Thị B 8.2 → Phạm Thị D 9.0.</p></div>
+</div></section>
+<section class="section" id="pros"><div class="container"><h2>Ưu điểm</h2><div class="script-block"><p>Dễ hiểu, đổi chỗ ít (≤ n−1), sắp tại chỗ.</p></div></div></section>
+<section class="section dark" id="cons"><div class="container"><h2>Nhược điểm</h2><div class="script-block"><p>Luôn <strong>O(n²)</strong>, không ổn định, không dừng sớm.</p></div></div></section>
+<section class="section conclusion" id="conclusion"><div class="container"><h2>Kết luận</h2>
+<div class="script-block"><p>Selection Sort đơn giản, đổi chỗ ít, nhưng chậm vì <strong>O(n²)</strong>. Nhóm em xin cảm ơn thầy cô và các bạn.</p></div>
+<div class="thank-you"><h3>Cảm ơn đã lắng nghe!</h3></div></div></section>
 <script src="script.js"></script>
-</body>
-</html>
+</body></html>
