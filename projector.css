@@ -1,0 +1,6 @@
+:root{--text:#ffffff;--text-muted:#ffffff;--text-dim:#f5f5f5;--accent-soft:#ffffff}
+body,p,li,h1,h2,h3,h4,h5,span,div,.script-block p,.hero-desc,.subtitle,.eyebrow,.section-desc,.step-explanation,.cmt{color:#ffffff !important}
+.highlight,.thank-you h3{background:none !important;-webkit-text-fill-color:#ffffff !important;color:#ffffff !important}
+.code-panel code,.code-panel pre{color:#ffffff !important}
+.card.good h4,.pros h3{color:#7dffcf !important}
+.card.bad h4,.cons h3{color:#ff9aa4 !important}
