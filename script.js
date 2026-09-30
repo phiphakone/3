@@ -1,10 +1,11 @@
+(function(){var l=document.createElement('link');l.rel='stylesheet';l.href='projector.css';document.head.appendChild(l);}());
 const progressBar = document.getElementById('progressBar');
 const navDots = document.querySelectorAll('.nav-dots a');
 const sections = document.querySelectorAll('.section');
 function updateProgress() {
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  progressBar.style.width = (scrollTop / docHeight) * 100 + '%';
+  if (progressBar) progressBar.style.width = (scrollTop / docHeight) * 100 + '%';
   let current = 0;
   sections.forEach((sec, i) => { if (sec.getBoundingClientRect().top <= window.innerHeight / 2) current = i; });
   navDots.forEach((dot, i) => dot.classList.toggle('active', i === current));
@@ -41,6 +42,7 @@ const prevBtn = document.getElementById('prevStep');
 const nextBtn = document.getElementById('nextStep');
 const maxVal = 64;
 function renderStep(idx) {
+  if (!arrayState) return;
   const step = steps[idx];
   stepLabel.textContent = step.label;
   stepExplanation.textContent = step.explanation;
@@ -61,7 +63,9 @@ function renderStep(idx) {
   prevBtn.disabled = idx === 0;
   nextBtn.disabled = idx === steps.length - 1;
 }
+if (prevBtn && nextBtn) {
 prevBtn.addEventListener('click', () => { if (currentStep > 0) { currentStep--; renderStep(currentStep); } });
 nextBtn.addEventListener('click', () => { if (currentStep < steps.length - 1) { currentStep++; renderStep(currentStep); } });
 document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') nextBtn.click(); if (e.key === 'ArrowLeft') prevBtn.click(); });
 renderStep(0);
+}
